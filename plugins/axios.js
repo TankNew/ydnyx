@@ -1,14 +1,20 @@
 import swal from 'sweetalert'
 
-export default function({ $axios, redirect }) {
+export default function({ $axios, store, app, redirect }) {
     $axios.onRequest(
         config => {
-            config.headers.common[window.abp.localization.cookieName] = window.abp.utils.getCookieValue(
-                abp.localization.cookieName
+            const location = app.$cookies.get(
+                store.state.location.data.headerName
             )
-            config.headers.common[
-                window.abp.multiTenancy.tenantIdCookieName
-            ] = window.abp.multiTenancy.getTenantIdCookie()
+            config.headers.common[store.state.location.data.headerName] =
+                location || store.getters['location/getCulture']
+
+            /**开发测试 */
+            const multiTenancyHeader = 'Abp.TenantId'
+            const multiTenancy = app.$cookies.get(multiTenancyHeader)
+            config.headers.common[multiTenancyHeader] = multiTenancy || 9
+            /**开发测试 over*/
+
             return config
         },
         function(error) {
@@ -32,7 +38,11 @@ export default function({ $axios, redirect }) {
                     text: error.response.data.error.details,
                     icon: 'error'
                 })
-            } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
+            } else if (
+                !!error.response &&
+                !!error.response.data.error &&
+                !!error.response.data.error.message
+            ) {
                 swal({
                     title: window.abp.localization.localize('LoginFailed'),
                     text: error.response.data.error.message,

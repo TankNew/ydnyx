@@ -8,7 +8,10 @@ export default {
         title: process.env.npm_package_name || '',
         meta: [
             { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1'
+            },
             {
                 hid: 'description',
                 name: 'description',
@@ -29,11 +32,14 @@ export default {
     /*
      ** Global CSS
      */
-    css: ['assets/css/main.css'],
+    css: ['assets/css/main.css', '~/static/css/all.min.css'],
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [{ src: '~/plugins/main.js', mode: 'client' }, '~/plugins/axios'],
+    plugins: [
+        { src: '~/plugins/main.js', mode: 'client' },
+        { src: '~/plugins/axios.js' }
+    ],
     /*
      ** Nuxt.js dev-modules
      */
@@ -48,7 +54,8 @@ export default {
         // Doc: https://bootstrap-vue.js.org
         'bootstrap-vue/nuxt',
         // Doc: https://axios.nuxtjs.org/usage
-        '@nuxtjs/axios'
+        '@nuxtjs/axios',
+        'cookie-universal-nuxt'
     ],
     /*
      ** Axios module configuration
@@ -60,7 +67,11 @@ export default {
         credentials: true
     },
     proxy: {
-        '/api': { target: 'http://cms.ednet.cn', pathRewrite: { '^/api': '' } }
+        '/api/': { target: 'http://cms.ednet.cn' },
+        '/apib/': {
+            target: 'http://cms.ednet.cn',
+            pathRewrite: { '^/apib/': '' }
+        }
     },
     /*
      ** Build configuration

@@ -15,10 +15,10 @@ export default async function({ $axios, redirect }) {
             abp.appPath
         )
     }
-
-    await $axios.get('/api/AbpUserConfiguration/GetAll').then(data => {
+    await $axios.get('/apib/AbpUserConfiguration/GetAll').then(data => {
         window.abp = tools.extend(true, window.abp, data.data.result)
-        window.abp.localization.defaultSourceName = appconst.localization.defaultLocalizationSourceName
+        window.abp.localization.defaultSourceName =
+            appconst.localization.defaultLocalizationSourceName
         window.abp.banner = {
             HomePageWidth: abp.setting.getInt('App.Banner.HomePageWidth'),
             HomePageHeight: abp.setting.getInt('App.Banner.HomePageHeight'),

@@ -26,11 +26,19 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item href="/main/home">首页</b-nav-item>
-            <b-nav-item
-              v-for="item in navbar[0].children"
-              :key="item.id"
-              href="#"
-            >{{ item.displayName }}</b-nav-item>
+            <section v-for="item in navbars[0].children" :key="item.id">
+              <b-nav-item-dropdown
+                v-if="item.navbarType===0"
+                :text="item.displayName "
+              >
+                <b-dropdown-item
+                  v-for="ditem in item.children"
+                  :key="ditem.id"
+                  :href="ditem.url"
+                >{{ ditem.displayName }}</b-dropdown-item>
+              </b-nav-item-dropdown>
+              <b-nav-item v-else :href="item.url">{{ item.displayName }}</b-nav-item>
+            </section>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -40,45 +48,39 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
-    head() {
-        return {
-            title: this.companyInfo.appName,
-            meta: [
-                { hid: 'description', name: 'description', content: 'hi-Sen' }
-            ]
-        }
-    },
-    data() {
-        return {}
-    },
-    computed: {
-        ...mapGetters({ currentPath: 'path/current' }),
-        ...mapState({
-            ip: 'ip',
-            companyInfo: state => state.companyInfo.data,
-            navbar: state => state.navbar.data
-        })
-    },
-    asyncData(context) {
-        return { name: 'Main', userAgent: context.userAgent }
-    },
-    async fetch(context) {
-        const ip = (await axios.get('http://icanhazip.com')).data
-        context.store.dispatch('setIp', ip)
-        await context.store.dispatch('companyInfo/get')
-        await context.store.dispatch('navbar/getAll')
-    },
+  head() {
+    return {
+      title: this.companyInfo.appName,
+      meta: [{ hid: 'description', name: 'description', content: 'hi-Sen' }]
+    }
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapGetters({ currentPath: 'path/current' }),
+    ...mapState({
+      companyInfo: state => state.companyInfo.data,
+      navbars: state => state.app.navbars
+    })
+  },
+  asyncData(context) {
+    return { name: 'Main', userAgent: context.userAgent }
+  },
+  async fetch(context) {
+    await context.store.dispatch('companyInfo/get')
+    await context.store.dispatch('app/getNavbars')
+  },
 
-    created() {},
-    mounted() {
-        // console.log(this.navbar)
-        // console.log(abp)
-        // console.log(this.ip)
-        // console.log(this.L('HomePage'))
-    },
-    methods: {}
+  created() {},
+  mounted() {
+    console.log(this.navbars)
+    // console.log(abp)
+    // console.log(this.ip)
+    // console.log(this.L('HomePage'))
+  },
+  methods: {}
 }
 </script>

@@ -159,17 +159,83 @@ body {
   height: 100%;
   font-size: 13px;
 }
+header {
+  min-height: 152px;
+}
+header .header-title {
+  font-weight: bold;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+header .header-title .logo > img {
+  height: 60px;
+}
+@media (min-width: 768px) {
+  header .header-title .logo > img {
+    height: 75px;
+  }
+}
+@media (min-width: 1200px) {
+  header .header-title .logo > img {
+    height: 90px;
+  }
+}
+header .header-title .company-name {
+  display: none;
+}
+@media (min-width: 768px) {
+  header .header-title .company-name {
+    display: block;
+    font-size: 28px;
+    color: #666;
+    flex-grow: 1;
+  }
+}
+@media (min-width: 1200px) {
+  header .header-title .company-name {
+    font-size: 36px;
+  }
+}
+header .header-title .contact-info {
+  display: none;
+}
+@media (min-width: 768px) {
+  header .header-title .contact-info {
+    display: block;
+    letter-spacing: 1px;
+  }
+  header .header-title .contact-info .phone {
+    display: block;
+    color: #ff6d40;
+    margin-bottom: 6px;
+  }
+  header .header-title .contact-info .weixin {
+    display: block;
+    color: #8bc600;
+  }
+}
 .bg-orange {
   font-size: 16px;
   color: white;
   background-color: #ff6d40 !important;
 }
 .navbar-orange {
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (min-width: 768px) {
+  .navbar-orange {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 .navbar-orange .navbar-brand {
   color: #fff;
   font-size: 16px;
+  padding-left: 20px;
 }
 .navbar-orange .navbar-brand:hover,
 .navbar-orange .navbar-brand:focus {
@@ -223,6 +289,7 @@ body {
   color: #fff;
 }
 .navbar-orange .navbar-toggler {
+  margin-right: 10px;
   color: #fff;
   border-color: #eee;
 }
@@ -239,51 +306,15 @@ body {
 .navbar-orange .navbar-text a:focus {
   color: #fff;
 }
-header {
-  min-height: 152px;
+.navbar-orange .dropdown-menu {
+  background-color: #ff6d40;
 }
-header .header-title {
-  font-weight: bold;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+.navbar-orange .dropdown-menu a {
+  padding-left: 40px;
+  color: #fff;
+  background-color: #ff6d40;
 }
-header .header-title .logo > img {
-  height: 60px;
-}
-@media (min-width: 768px) {
-  header .header-title .logo > img {
-    height: 90px;
-  }
-}
-header .header-title .company-name {
-  display: none;
-}
-@media (min-width: 768px) {
-  header .header-title .company-name {
-    display: block;
-    font-size: 36px;
-    color: #666;
-    flex-grow: 1;
-  }
-}
-header .header-title .contact-info {
-  display: none;
-}
-@media (min-width: 768px) {
-  header .header-title .contact-info {
-    display: block;
-    letter-spacing: 1px;
-  }
-  header .header-title .contact-info .phone {
-    display: block;
-    color: #ff6d40;
-    margin-bottom: 6px;
-  }
-  header .header-title .contact-info .weixin {
-    display: block;
-    color: #8bc600;
-  }
+.navbar-orange .dropdown-menu a:hover,
+.navbar-orange .dropdown-menu a:focus {
+  background-color: #e90000;
 }

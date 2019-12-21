@@ -36,7 +36,6 @@
 }
 .main {
   min-height: 550px;
-
   .page-title {
     background-image: url(~assets/imgs/Separator.jpg);
     background-repeat: repeat;
@@ -84,5 +83,60 @@
     @media (min-width: 768px) {
       max-width: 910px;
     }
+  }
+}
+.home-group-1 {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  > .title {
+    h5 {
+      color: white;
+      background-image: linear-gradient(75deg, @orange 55%, @cherry 95%);
+      padding: 10px;
+      font-size: 120%;
+    }
+  }
+  > .group-list {
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      display: inline-block;
+      width: calc(50% - 14px);
+      height: 0;
+      padding-bottom: 30%;
+      margin: 6px;
+      border: 1px solid @orange;
+    }
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+    background-image: linear-gradient(75deg, @orange 15%, @cherry 95%);
+    height: 285px;
+    padding: 14px;
+    margin-top: 10px;
+    > .title {
+      h5 {
+        height: 30px;
+        background: none;
+        padding: 0;
+        margin: 0;
+      }
+    }
+    > .group-list {
+      background-color: #fff;
+      height: calc(100% - 30px);
+    }
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px;
   }
 }

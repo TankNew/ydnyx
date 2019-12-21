@@ -47,15 +47,13 @@
                 <b-dropdown-item
                   v-for="ditem in item.children"
                   :key="ditem.id"
-                  :href="ditem.url"
-                  @click.prevent.stop="go(ditem.url)"
+                  :to="ditem.url"
                 >{{ $L(ditem.displayName) }}</b-dropdown-item>
               </b-nav-item-dropdown>
               <b-nav-item
                 v-else
                 :class="[item.url==currentPage.url?'active':'']"
-                :href="item.url"
-                @click.prevent.stop="go(item.url)"
+                :to="item.url"
               >{{ $L(item.displayName) }}</b-nav-item>
             </section>
           </b-navbar-nav>

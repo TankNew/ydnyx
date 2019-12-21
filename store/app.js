@@ -2,7 +2,8 @@ const state = () => ({
   navbars: [],
   currentPage: {},
   companyInfo: {},
-  partners: []
+  partners: [],
+  homePage: {}
 })
 const mutations = {
   setCompanyInfo(state, val) {
@@ -31,6 +32,10 @@ const actions = {
   async getPartner(context) {
     const res = await this.$axios.get('/api/services/app/Partner/GetAll')
     if (res.data.success) context.state.partners = res.data.result
+  },
+  async getHomePage(context) {
+    const res = await this.$axios.get('/api/services/app/HomePage/GetOrCreate')
+    if (res.data.success) context.state.homePage = res.data.result
   }
 }
 

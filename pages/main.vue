@@ -40,8 +40,9 @@
           <b-navbar-nav>
             <section v-for="item in navbars" :key="item.id">
               <b-nav-item-dropdown
-                v-if="item.navbarType===0"
-                :class="[item.url==currentPage.url?'active':'']"
+                v-if="item.children&&item.children.length>0"
+                :class="[currentPath.id===item.id
+                ||(currentPathParent&&currentPathParent.id===item.id)?'active':'']"
                 :text="$L(item.displayName)"
               >
                 <b-dropdown-item
@@ -52,7 +53,8 @@
               </b-nav-item-dropdown>
               <b-nav-item
                 v-else
-                :class="[item.url==currentPage.url?'active':'']"
+                :class="[currentPath.id===item.id
+                ||(currentPathParent&&currentPathParent.id===item.id)?'active':'']"
                 :to="item.url"
               >{{ $L(item.displayName) }}</b-nav-item>
             </section>
@@ -60,7 +62,7 @@
         </b-collapse>
       </b-navbar>
     </header>
-    <section :class="['banner',currentPage.navbarType===5?'':'sub']">
+    <section :class="['banner',currentPath.navbarType===5?'':'sub']">
       <b-carousel
         id="carousel-1"
         v-model="slide"
@@ -71,7 +73,7 @@
         style="text-shadow: 1px 1px 2px #333;"
       >
         <b-carousel-slide
-          v-for="(item, index) in currentPage.bannerImgs"
+          v-for="(item, index) in bannerImgs"
           :key="index"
           :img-src="getImgUrl(item.imgUrl)"
         >
@@ -112,7 +114,6 @@
             <p>
               <img :src="companyInfo.weixinBarCode" style="width:120px" />
             </p>
-            <button type="button" class="btn btn-warning px-4">咨询更多</button>
           </div>
         </div>
         <div class="partner">
@@ -148,7 +149,7 @@ import AppConsts from '../utiltools/appconst'
 export default {
   head() {
     return {
-      title: this.$L(this.currentPage.displayName) + ' - ' + this.companyInfo.appName,
+      title: this.$L(this.currentPath.displayName) + ' - ' + this.companyInfo.appName,
       meta: [{ hid: 'description', name: 'description', content: 'hi-Sen' }]
     }
   },
@@ -164,13 +165,18 @@ export default {
       abp: state => state.abp,
       companyInfo: state => state.app.companyInfo,
       navbars: state => state.app.navbars,
-      currentPage: state => state.app.currentPage,
-      partners: state => state.app.partners
+      currentPath: state => state.app.currentPath,
+      currentPathParent: state => state.app.currentPathParent,
+      partners: state => state.app.partners,
+      bannerImgs: state =>
+        state.app.currentPath.bannerImgs.length > 0
+          ? state.app.currentPath.bannerImgs
+          : state.app.currentPathParent.bannerImgs
     })
   },
   watch: {
     $route(val) {
-      this.setCurrentPage(this.$route.path)
+      this.setcurrentPath(this.$route.path)
     }
   },
   asyncData(context) {
@@ -180,11 +186,11 @@ export default {
     await context.store.dispatch('app/getPartner')
   },
   created() {
-    this.setCurrentPage(this.$route.path)
+    this.setcurrentPath(this.$route.path)
   },
-  mounted() {},
+
   methods: {
-    ...mapActions({ setCurrentPage: 'app/setCurrentPage' }),
+    ...mapActions({ setcurrentPath: 'app/setcurrentPath' }),
     go(url) {
       this.$router.push({ path: url })
     },

@@ -1,16 +1,13 @@
-import swal from 'sweetalert'
-
 export default function({ $axios, store, app, redirect }) {
   $axios.onRequest(
     config => {
       const location = app.$cookies.get(store.state.location.data.headerName)
-      config.headers.common[store.state.location.data.headerName] =
-        location || store.getters['location/getCulture']
+      config.headers.common[store.state.location.data.headerName] = location || store.getters['location/getCulture']
 
       /**开发测试 */
       const multiTenancyHeader = 'Abp.TenantId'
       const multiTenancy = app.$cookies.get(multiTenancyHeader)
-      config.headers.common[multiTenancyHeader] = multiTenancy || 9
+      config.headers.common[multiTenancyHeader] = 9
       /**开发测试 over*/
 
       return config
@@ -31,28 +28,15 @@ export default function({ $axios, store, app, redirect }) {
         !!error.response.data.error.message &&
         error.response.data.error.details
       ) {
-        swal({
-          title: error.response.data.error.message,
-          text: error.response.data.error.details,
-          icon: 'error'
-        })
-      } else if (
-        !!error.response &&
-        !!error.response.data.error &&
-        !!error.response.data.error.message
-      ) {
-        swal({
-          title: window.abp.localization.localize('LoginFailed'),
-          text: error.response.data.error.message,
-          icon: 'error'
-        }).then(redirect('/error'))
+        console.error(error.response.data.error.message)
+        console.error(error.response.data.error.details)
+      } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
+        console.error(error.response.data.error.message)
+        redirect('/error')
       } else if (!error.response) {
-        swal({
-          title: window.abp.localization.localize('UnknownError'),
-          icon: 'error'
-        })
+        console.error(`no response`)
       }
-      console.log(`ajax error`)
+      console.error(`ajax error`)
       return Promise.reject(error)
     }
   )

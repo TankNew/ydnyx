@@ -4,12 +4,29 @@
 @bule: #61affe;
 @purple: #7e57c2;
 
-@orange: #ff6d40;
-@dark-orange: #fa5733;
-@cherry: #e90000;
+@orange: #ff6d40; //255,109,64
+@dark-orange: #fa5733; //250,87,51
+@cherry: #e90000; //233,0,0
 @green: #8bc600;
 @gray: #666;
 
+.btn-orange {
+  color: white;
+  background-color: @orange;
+  border-color: @dark-orange;
+  &:hover {
+    color: white;
+    background-color: @dark-orange;
+    border-color: @cherry;
+  }
+  &:focus,
+  &.focus {
+    color: white;
+    background-color: @dark-orange;
+    border-color: @cherry;
+    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  }
+}
 /*通用设置*/
 html {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
@@ -26,10 +43,10 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
+  // user-select: none;
+  // -webkit-user-select: none;
+  // -ms-user-select: none;
+  // -moz-user-select: none;
 }
 #__nuxt,
 #__layout {

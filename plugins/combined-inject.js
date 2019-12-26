@@ -5,11 +5,7 @@ export default function({ store, app }, inject) {
     if (source) {
       return localize(value, source, argus)
     } else {
-      return localize(
-        value,
-        appconst.localization.defaultLocalizationSourceName,
-        argus
-      )
+      return localize(value, appconst.localization.defaultLocalizationSourceName, argus)
     }
   })
   const localize = function(key, sourceName) {

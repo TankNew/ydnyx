@@ -1,4 +1,15 @@
 import appconst from './utiltools/appconst'
+let ajaxConfig = {
+  // baseURL: appconst.remoteServiceBaseUrl,
+  proxy: true,
+  credentials: true
+}
+if (process.env.NODE_ENV === 'production')
+  ajaxConfig = {
+    baseURL: appconst.remoteServiceBaseUrl,
+    // proxy: true,
+    credentials: true
+  }
 export default {
   mode: 'universal',
   /*
@@ -21,6 +32,9 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   router: {
+    scrollBehavior(to, from, savedPosition) {
+      return { x: 0, y: 0 }
+    },
     middleware: ['user-agent'],
     // 配置路由的模式，鉴于服务端渲染的特性，不建议修改该配置
     mode: 'history'
@@ -33,6 +47,7 @@ export default {
    ** Global CSS
    */
   css: [
+    'swiper/dist/css/swiper.css',
     'assets/css/main.less',
     '~/static/css/all.min.css'
     // '~/node_modules/material-design-icons/iconfont/material-icons.css'
@@ -68,16 +83,10 @@ export default {
      ** See https://axios.nuxtjs.org/options
      baseURL and proxy cannot be used at the same time, so when the proxy option is in use, you need to define prefix instead of baseURL.
      */
-  axios: {
-    proxy: true,
-    credentials: true
-  },
+  axios: ajaxConfig,
   proxy: {
-    '/api/': { target: 'http://cms.ednet.cn' },
-    '/apib/': {
-      target: 'http://cms.ednet.cn',
-      pathRewrite: { '^/apib/': '' }
-    }
+    '/api/': { target: 'https://cms.ednet.cn' },
+    '/AbpUserConfiguration/': { target: 'https://cms.ednet.cn' }
   },
   /*
    ** Build configuration

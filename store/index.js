@@ -30,7 +30,7 @@ const actions = {
   },
 
   async getAbp(context) {
-    await this.$axios.get('/apib/AbpUserConfiguration/GetAll').then(data => {
+    await this.$axios.get('/AbpUserConfiguration/GetAll').then(data => {
       const json = data.data.result
       json.localization.defaultSourceName = appconst.localization.defaultLocalizationSourceName
       context.state.abp = json

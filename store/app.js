@@ -60,6 +60,10 @@ const actions = {
     const res = await this.$axios.get('/api/services/app/Page/Get', params)
     if (res.data.success) return res.data.result
   },
+  async getCatalogGroupList(context, params) {
+    const res = await this.$axios.get('/api/services/app/CatalogGroup/GetAll', params)
+    if (res.data.success) return res.data.result
+  },
   async getCatalogList(context, params) {
     const res = await this.$axios.get('/api/services/app/Catalog/GetAll', params)
     if (res.data.success) return res.data.result

@@ -22,9 +22,7 @@
         >
           <img :src="item.cover" />
           <span class="cover-title">
-            <a
-              href="javascript:void(0)"
-            >{{ item.title }}</a>
+            <a href="javascript:void(0)">{{ item.title }}</a>
           </span>
         </li>
       </ul>
@@ -92,17 +90,19 @@ export default {
       }
     },
     goNewsDetail(id, type) {
+      let typename
       switch (type) {
         case 1:
-          this.$router.push('/main/news/detail/' + String(id))
+          typename = 'news'
           break
         case 2:
-          this.$router.push('/main/photonews/detail/' + String(id))
+          typename = 'photonews'
           break
         case 3:
-          this.$router.push('/main/product/detail/' + String(id))
+          typename = 'product'
           break
       }
+      window.open('/main/' + typename + '/detail/' + String(id), '_blank')
     },
     async pageChange() {
       const params = {

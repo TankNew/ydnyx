@@ -95,14 +95,23 @@
               <li
                 :key="navi.id"
                 v-for="navi in navbars"
-                v-if="navi.navbarType!==5&&(!navi.url||(navi.url&&navi.url.toLowerCase()!=='/main/contactus'))"
+                v-if="navi.navbarType!==5&&(!navi.url||(navi.displayName&&navi.displayName!=='联系我们'))"
               >
                 <dl>
-                  <dt>{{ navi.displayName }}</dt>
-                  <dd
-                    :key="child.id"
-                    v-for="child in navi.children"
-                  >{{ child.displayName }}</dd>
+                  <dt>
+                    <nuxt-link
+                      v-if="navi.url"
+                      :to="navi.url"
+                      class="white"
+                    >{{ navi.displayName }}</nuxt-link>
+                    <span v-else>{{ navi.displayName }}</span>
+                  </dt>
+                  <dd :key="child.id" v-for="child in navi.children">
+                    <nuxt-link
+                      :to="child.url"
+                      class="white"
+                    >{{ child.displayName }}</nuxt-link>
+                  </dd>
                 </dl>
               </li>
             </ul>

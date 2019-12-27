@@ -93,17 +93,19 @@ export default {
       }
     },
     goNewsDetail(id, type) {
+      let typename
       switch (type) {
         case 1:
-          this.$router.push('/main/news/detail/' + String(id))
+          typename = 'news'
           break
         case 2:
-          this.$router.push('/main/photonews/detail/' + String(id))
+          typename = 'photonews'
           break
         case 3:
-          this.$router.push('/main/product/detail/' + String(id))
+          typename = 'product'
           break
       }
+      window.open('/main/' + typename + '/detail/' + String(id), '_blank')
     },
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)

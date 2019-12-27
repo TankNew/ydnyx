@@ -93,7 +93,7 @@
           </div>
           <p class="center">
             <button
-              @click="goNewsGroup(firstPhotoGroup.id,2)"
+              @click="goNewsGroup(firstPhotoGroup.id,3)"
               class="btn btn-orange"
               type="button"
             >点击查看更多</button>
@@ -102,7 +102,9 @@
         <div class="clear"></div>
       </div>
       <div class="block container mt-5">
-        <img :src="homePage.blocks[0].img" class="img-fluid" />
+        <a :href="homePage.blocks[0].url" target="_blank">
+          <img :src="homePage.blocks[0].img" class="img-fluid" />
+        </a>
       </div>
       <div class="home-group-3">
         <div class="list">
@@ -128,12 +130,28 @@
           </div>
           <div class="top-news">
             <div class="cover">
-              <img :src="fifthGroup.cover" />
+              <a
+                @click="goNewsGroup(fifthGroup.id,1)"
+                href="javascript:void(0)"
+              >
+                <img :src="fifthGroupItemsTop.cover" />
+              </a>
             </div>
             <div class="info">
-              <h5>{{ filter(fifthGroupItemsTop.title,30 ) }}</h5>
-              <p>{{ filter(fifthGroupItemsTop.content,160 ) }}</p>
-              <p class="text-right">
+              <h5>
+                <a
+                  @click="goNewsDetail(fifthGroupItemsTop.id,1)"
+                  href="javascript:void(0)"
+                  class="orange"
+                >{{ filter(fifthGroupItemsTop.title,30 ) }}</a>
+              </h5>
+              <p>
+                <a
+                  @click="goNewsDetail(fifthGroupItemsTop.id,1)"
+                  href="javascript:void(0)"
+                >{{ filter(fifthGroupItemsTop.content,260 ) }}</a>
+              </p>
+              <p class="text-right mt-2">
                 <a
                   @click="goNewsDetail(fifthGroupItemsTop.id,1)"
                   href="javascript:void(0)"
@@ -148,11 +166,24 @@
             <ul>
               <li v-for="item in fifthGroupItemsOther" :key="item.id">
                 <div class="item-cover">
-                  <img :src="item.cover" />
+                  <a @click="goNewsDetail(item.id,1)" href="javascript:void(0)">
+                    <img :src="item.cover" />
+                  </a>
                 </div>
                 <div class="item">
-                  <h5>{{ filter(item.title,30 ) }}</h5>
-                  <p class="mb-0">{{ filter(item.content,86) }}</p>
+                  <h5>
+                    <a
+                      @click="goNewsDetail(item.id,1)"
+                      href="javascript:void(0)"
+                      class="orange"
+                    >{{ filter(item.title,26 ) }}</a>
+                  </h5>
+                  <p class="mb-0">
+                    <a
+                      @click="goNewsDetail(item.id,1)"
+                      href="javascript:void(0)"
+                    >{{ filter(item.content,86) }}</a>
+                  </p>
                   <p class="text-right">
                     <a
                       @click="goNewsDetail(item.id,1)"
@@ -172,7 +203,9 @@
             <h5>{{ sixGroup.displayName }}</h5>
           </div>
           <div class="cover">
-            <img :src="sixGroup.cover" />
+            <a @click="goNewsGroup(sixGroup.id,1)" href="javascript:void(0)">
+              <img :src="sixGroup.cover" />
+            </a>
           </div>
           <div class="list">
             <ul>
@@ -246,17 +279,19 @@ export default {
       }
     },
     goNewsDetail(id, type) {
+      let typename
       switch (type) {
         case 1:
-          this.$router.push('/main/news/detail/' + String(id))
+          typename = 'news'
           break
         case 2:
-          this.$router.push('/main/photonews/detail/' + String(id))
+          typename = 'photonews'
           break
         case 3:
-          this.$router.push('/main/product/detail/' + String(id))
+          typename = 'product'
           break
       }
+      window.open('/main/' + typename + '/detail/' + String(id), '_blank')
     },
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)
@@ -265,11 +300,8 @@ export default {
       const Groups = this.homePage.groups.filter(x => x.catalogGroup && x.catalogGroup.catalogType === 1)
       if (Groups.length > 0) {
         this.firstGroup = Groups[0].catalogGroup
-        await this.$axios
-          .get('/api/services/app/CatalogGroup/GetAll', { params: { id: this.firstGroup.id } })
-          .then(res => {
-            if (res.data.success) this.firstGroup.children = res.data.result
-          })
+        const res = await this.$store.dispatch('app/getCatalogGroupList', { params: { id: this.firstGroup.id } })
+        this.firstGroup.children = res
       }
     },
     async loadFirstPhotoGroup() {
@@ -286,9 +318,8 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) this.firstPhotoGroupItems = res.data.result.items
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.firstPhotoGroupItems = res.items
       }
     },
     async loadSecondGroup() {
@@ -303,9 +334,8 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) this.secondGroupItems = res.data.result.items
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.secondGroupItems = res.items
       }
     },
     async loadThird() {
@@ -320,9 +350,8 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) this.thirdGroupItems = res.data.result.items
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.thirdGroupItems = res.items
       }
     },
     async loadFourthGroup() {
@@ -338,9 +367,8 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) this.fourthGroupItems = res.data.result.items
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.fourthGroupItems = res.items
       }
     },
     async loadFifthGroup() {
@@ -356,12 +384,9 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) {
-            this.fifthGroupItemsTop = res.data.result.items[0]
-            this.fifthGroupItemsOther = res.data.result.items.filter((x, index) => index > 0)
-          }
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.fifthGroupItemsTop = res.items[0]
+        this.fifthGroupItemsOther = res.items.filter((x, index) => index > 0)
       }
     },
     async loadSixGroup() {
@@ -377,9 +402,8 @@ export default {
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
-        await this.$axios.get('/api/services/app/Catalog/GetAll', params).then(res => {
-          if (res.data.success) this.sixGroupItems = res.data.result.items
-        })
+        const res = await this.$store.dispatch('app/getCatalogList', params)
+        this.sixGroupItems = res.items
       }
     }
   }

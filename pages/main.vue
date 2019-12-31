@@ -129,7 +129,7 @@
           <dl>
             <dt>友情链接</dt>
             <dd v-for="item in partners.items" :key="item.id">
-              <a>
+              <a :href="item.url" class="white" target="_blank">
                 <span>{{ item.title }}</span>
               </a>
             </dd>

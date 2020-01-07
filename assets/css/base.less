@@ -10,22 +10,8 @@
 @green: #8bc600;
 @gray: #666;
 
-.btn-orange {
-  color: white;
-  background-color: @orange;
-  border-color: @dark-orange;
-  &:hover {
-    color: white;
-    background-color: @dark-orange;
-    border-color: @cherry;
-  }
-  &:focus,
-  &.focus {
-    color: white;
-    background-color: @dark-orange;
-    border-color: @cherry;
-    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
-  }
+* {
+  outline: none !important;
 }
 /*通用设置*/
 html {
@@ -47,6 +33,24 @@ body {
   // -webkit-user-select: none;
   // -ms-user-select: none;
   // -moz-user-select: none;
+}
+
+.btn-orange {
+  color: white;
+  background-color: @orange;
+  border-color: @dark-orange;
+  &:hover {
+    color: white;
+    background-color: @dark-orange;
+    border-color: @cherry;
+  }
+  &:focus,
+  &.focus {
+    color: white;
+    background-color: @dark-orange;
+    border-color: @cherry;
+    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  }
 }
 #__nuxt,
 #__layout {

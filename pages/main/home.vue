@@ -102,8 +102,11 @@
         <div class="clear"></div>
       </div>
       <div class="block container mt-5">
-        <a :href="homePage.blocks[0].url" target="_blank">
-          <img :src="homePage.blocks[0].img" class="img-fluid" />
+        <a :href="homePage.blocks[0]?homePage.blocks[0].url:''" target="_blank">
+          <img
+            :src="homePage.blocks[0]?homePage.blocks[0].img:''"
+            class="img-fluid"
+          />
         </a>
       </div>
       <div class="home-group-3">

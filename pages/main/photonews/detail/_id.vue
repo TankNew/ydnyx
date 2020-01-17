@@ -73,10 +73,11 @@ export default {
         path += 'product/' + catalogItem.catalogGroup.id
         break
     }
-    await store.dispatch('app/setcurrentPath', path)
-    return { catalogItem }
+    return { catalogItem, path }
   },
-  created() {},
+  created() {
+    this.$store.dispatch('app/setcurrentPath', this.path)
+  },
   mounted() {
     this.$nextTick(() => (this.isloaded = true))
     // this.mySwiper.slideTo(3, 1000, false)

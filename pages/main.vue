@@ -141,8 +141,25 @@
       <div class="container">
         <dl>
           <dd>{{ companyInfo.appName }}</dd>
-          <dd>http://www.ydnyx.com</dd>
-          <dd>津ICP备案</dd>
+          <dd v-for="item in companyInfo.icps">
+            <a
+              class="gongan"
+              target="_blank"
+              href="http://beian.miit.gov.cn/publish/query/indexFirst.action"
+            >
+              <p>津ICP备{{ item }}</p>
+            </a>
+          </dd>
+          <dd v-for="item in companyInfo.gongAns">
+            <a
+              :href="`http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=${item}`"
+              class="gongan"
+              target="_blank"
+            >
+              <img src="@/assets/imgs/gongan.png" />
+              <p>津公网安备{{ item }}号</p>
+            </a>
+          </dd>
           <dd>
             技术支持：
             <a href="https://www.ednet.cn" target="_blank">e德互联</a>

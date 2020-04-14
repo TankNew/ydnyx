@@ -61,7 +61,7 @@ export default {
   async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
     const id = route.params.id
     const catalogItem = await store.dispatch('app/getCatalog', { params: { id } })
-    let path = '/main/'
+    let path = '/zh-CN/'
     switch (catalogItem.catalogGroup.catalogType) {
       case 1:
         path += 'news/' + catalogItem.catalogGroup.id

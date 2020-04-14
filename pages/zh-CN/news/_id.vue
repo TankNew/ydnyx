@@ -82,13 +82,13 @@ export default {
     goNewsGroup(id, type) {
       switch (type) {
         case 1:
-          this.$router.push('/main/news/' + String(id))
+          this.$router.push('/zh-CN/news/' + String(id))
           break
         case 2:
-          this.$router.push('/main/photonews/' + String(id))
+          this.$router.push('/zh-CN/photonews/' + String(id))
           break
         case 3:
-          this.$router.push('/main/product/' + String(id))
+          this.$router.push('/zh-CN/product/' + String(id))
           break
       }
     },
@@ -105,7 +105,7 @@ export default {
           typename = 'product'
           break
       }
-      window.open('/main/' + typename + '/detail/' + String(id), '_blank')
+      window.open('/zh-CN/' + typename + '/detail/' + String(id), '_blank')
     },
     filter(val, length) {
       return tools.cutString(tools._filter(val), length)

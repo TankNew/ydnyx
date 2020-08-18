@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html {{ HTML_ATTRS }}>
-    <head {{ HEAD_ATTRS }}>
-        {{ HEAD }}
-    </head>
-    <body {{ BODY_ATTRS }}>
-        {{ APP }}
-    </body>
+  <head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+    <script>
+      var _hmt = _hmt || []
+      ;(function () {
+        var hm = document.createElement('script')
+        hm.src = 'https://hm.baidu.com/hm.js?fcc2f561537bb43a09e70304a2cd2de6'
+        var s = document.getElementsByTagName('script')[0]
+        s.parentNode.insertBefore(hm, s)
+      })()
+    </script>
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
 </html>

@@ -152,7 +152,7 @@
                 <a
                   @click="goNewsDetail(fifthGroupItemsTop.id,1)"
                   href="javascript:void(0)"
-                >{{ filter(fifthGroupItemsTop.content,180 ) }}</a>
+                >{{ filter(fifthGroupItemsTop.content,240 ) }}</a>
               </p>
               <p class="text-right mt-2">
                 <a
@@ -349,7 +349,7 @@ export default {
           params: {
             CatalogGroupId: this.thirdGroup.id,
             SkipCount: 0,
-            MaxResultCount: 6,
+            MaxResultCount: 5,
             Sorting: 'IsTop DESC, Number DESC'
           }
         }
